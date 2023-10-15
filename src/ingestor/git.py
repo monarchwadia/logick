@@ -8,7 +8,9 @@ class GitIngestor():
     def from_disk(self, folder_path: str):
         print("Loading repo from disk path:", folder_path)
 
-        # Workaround for issue where submodules are not loaded
+        # Workaround for issue where files in git repos in .cache are not loaded because
+        # git ignore-check uses this project's root /.gitignore instead of using the .gitignore of the target repo
+        # so we copy the files to a temp dir and load from there
         with TemporaryDirectory() as temp_dir:
             # copy files from folder_path to dir
             print("Copying files to temp dir:", temp_dir)
