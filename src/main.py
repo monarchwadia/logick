@@ -14,4 +14,4 @@ chat_model = ChatOpenAI()
 
 git_ingestor = GitIngestor()
 data = git_ingestor.from_web("https://github.com/theskumar/python-dotenv")
-print(data)
+print("Number of files read: ", data)
