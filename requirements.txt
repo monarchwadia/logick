@@ -2,3 +2,5 @@ langchain[llms]
 openai
 python-dotenv
 GitPython
+tiktoken
+faiss-cpu

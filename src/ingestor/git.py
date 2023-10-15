@@ -2,7 +2,7 @@ from urllib.parse import urlparse
 from git import Repo
 from langchain.document_loaders import GitLoader
 import os
-from tempfile import TemporaryDirectory
+from tempfile import TemporaryDirectory, mkdtemp
 
 class GitIngestor():
     def from_disk(self, folder_path: str):
@@ -11,14 +11,14 @@ class GitIngestor():
         # Workaround for issue where files in git repos in .cache are not loaded because
         # git ignore-check uses this project's root /.gitignore instead of using the .gitignore of the target repo
         # so we copy the files to a temp dir and load from there
-        with TemporaryDirectory() as temp_dir:
+        temp_dir = mkdtemp()
+        # with TemporaryDirectory() as temp_dir:
             # copy files from folder_path to dir
-            print("Copying files to temp dir:", temp_dir)
-            os.system(f"rsync -rtv {folder_path}/ {temp_dir}/")
-            branch = Repo(temp_dir).active_branch.name
-            print("Active branch:", branch)
-            data = GitLoader(repo_path=temp_dir, branch=branch).load()
-            return data
+        print("Copying files to temp dir:", temp_dir)
+        os.system(f"rsync -rtv {folder_path}/ {temp_dir}/")
+        branch = Repo(temp_dir).active_branch.name
+        print("Active branch:", branch)
+        return GitLoader(repo_path=temp_dir, branch=branch)
 
     def from_web(self, url: str):
         cache_dir = self.__build_cache_dirname(url)
