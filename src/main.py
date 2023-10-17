@@ -40,8 +40,20 @@ chain = (
     | StrOutputParser()
 )
 
-answer = chain.invoke("Is the blockchain package being used?")
-print(answer)
+
+# loop user input
+while True:
+    user_input = input(">>>> ")
+    print("BOT: ", end="")
+    answer = chain.stream(user_input)
+    for a in answer:
+        print(a, flush=True, end="")
+    print("")
+
+answer = chain.stream("Is the blockchain package being used?")
+
+for a in answer:
+    print(a, flush=True, end="")
 
 # print(chat_model.predict("hi!"))
 
