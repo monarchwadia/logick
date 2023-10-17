@@ -49,24 +49,3 @@ while True:
     for a in answer:
         print(a, flush=True, end="")
     print("")
-
-answer = chain.stream("Is the blockchain package being used?")
-
-for a in answer:
-    print(a, flush=True, end="")
-
-# print(chat_model.predict("hi!"))
-
-
-
-
-# # experiment
-
-# llm = OpenAI(openai_api_key=env_conf.openai_api_key)
-# model = ChatOpenAI()
-# prompt = ChatPromptTemplate.from_template("Existing is really cool isn't it, {name}?")
-# chain = prompt | model
-# print(chain.input_schema.schema())
-# print(chain.output_schema.schema())
-
-# print(chain.invoke({"name": "John"}))
